@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
+from __future__ import absolute_import, unicode_literals, print_function
 import unittest
 import mock
+import pickle
 from . import api
 from .compat import urlparse
 
@@ -15,6 +16,13 @@ class UtilsTest(unittest.TestCase):
         self.assertEqual(api.normalize_phone('8(999)1234-567'), '79991234567')
         self.assertEqual(api.normalize_phone('89991234567'), '79991234567')
 
+class ExceptionTest(unittest.TestCase):
+    def test_pickling(self):
+        exc = api.ImobisError(-5)
+        res = pickle.dumps(exc, pickle.HIGHEST_PROTOCOL)
+        new_exc = pickle.loads(res)
+        self.assertTrue(isinstance(new_exc, api.ImobisError))
+        self.assertEqual(new_exc.message(), exc.message())
 
 @mock.patch('imobis.api.urlopen')
 class ApiTest(unittest.TestCase):

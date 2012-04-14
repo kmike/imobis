@@ -13,7 +13,7 @@ except NameError:
     # python3 doesn't need this
     pass
 
-version='0.3'
+version='0.3.1'
 
 setup(
     name='imobis',

@@ -23,7 +23,7 @@ class ImobisError(Exception):
         -12: 'Неверный формат внешнего (external) Id',
     }
 
-    def __init__(self, code):
+    def __init__(self, code=None):
         self._code = code
 
     def __str__(self):
