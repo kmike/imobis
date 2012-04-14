@@ -6,8 +6,12 @@ for cmd in ('egg_info', 'develop'):
     if cmd in sys.argv:
         from setuptools import setup
 
-import sys
-reload(sys).setdefaultencoding("UTF-8")
+try:
+    import sys
+    reload(sys).setdefaultencoding("UTF-8")
+except NameError:
+    # python3 doesn't need this
+    pass
 
 version='0.1'
 

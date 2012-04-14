@@ -44,3 +44,17 @@ class ApiTest(unittest.TestCase):
         self.assertUrlQueryEqual(request_url, url)
 
         self.assertEqual(res, 124)
+
+    @mock.patch('imobis.api.urlopen')
+    def test_errors(self, urlopen):
+        urlopen.return_value.read.return_value = b'-1'
+
+        raised = False
+        try:
+            api.sms_send('login', 'password', 'Pan Gurman', '8 (999) 1234-567', 'привет', 5)
+        except api.ImobisError as e:
+            self.assertEqual(e._code, -1)
+            self.assertEqual(e.message(), 'Ошибка отправки')
+            raised = True
+        self.assertTrue(raised)
+
