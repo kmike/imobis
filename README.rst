@@ -14,13 +14,26 @@ Installation
 Usage
 =====
 
-Only sms sending is implemented in imobis 0.1.
-
 ::
 
-    >>> from imobis.api import sms_send
-    >>> res = api.sms_send('login', 'password', 'Sender', '79991234567', u'привет', message_id=5234)
+    >>> from imobis.api import Imobis
+    >>> im = Imobis('login', 'password')
+
+Send sms::
+
+    >>> im.send_sms('Sender', '79991234567', u'привет', message_id=5234)
     12836
+
+Get balance::
+
+    >>> im.get_balance()
+    100
+
+Check if phone number is valid::
+
+    >>> im.is_valid_phone('234234')
+    False
+
 
 Development
 -----------
