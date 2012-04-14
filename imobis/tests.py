@@ -67,11 +67,15 @@ class ApiTest(unittest.TestCase):
 
     def test_balance(self, urlopen):
         urlopen.return_value.read.return_value = b'100'
-        self.assertEqual(self.im.get_balance(), '100')
+        self.assertEqual(self.im.get_balance(), 100.0)
 
     def test_is_valid_phone(self, urlopen):
         urlopen.return_value.read.return_value = b'OK'
         self.assertTrue(self.im.is_valid_phone('1234234234'))
+
+    def test_is_valid_phone_error_format(self, urlopen):
+        urlopen.return_value.read.return_value = b'-9'
+        self.assertFalse(self.im.is_valid_phone('1234234234'))
 
     def test_is_valid_phone_error(self, urlopen):
         urlopen.return_value.read.return_value = b'-10'

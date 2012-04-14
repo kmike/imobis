@@ -76,7 +76,7 @@ class Imobis(object):
         """
         Returns current balance.
         """
-        return self._http_get(self.BALANCE_URL, {}).decode('utf8')
+        return float(self._http_get(self.BALANCE_URL, {}).decode('utf8'))
 
     def is_valid_phone(self, phone):
         """
@@ -94,6 +94,8 @@ class Imobis(object):
 
         try:
             code = int(res)
+            if code == -9: # invalid phone format
+                return False
             raise ImobisError(code)
         except ValueError:
             raise ImobisError(res)
